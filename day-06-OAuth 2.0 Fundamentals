@@ -1,0 +1,155 @@
+# Day 6 — OAuth 2.0 Fundamentals
+
+## Why OAuth Exists
+
+Before OAuth, users often had to share their credentials with third-party applications in order to access external services. This created serious security and privacy risks because applications could gain access to sensitive information.
+
+OAuth was created to allow applications to access resources on behalf of a user without knowing the user's password.
+
+---
+
+## The Problem Before OAuth
+
+Imagine a website that wants to access a user's Gmail account.
+
+Without OAuth, the website might ask for the user's Gmail credentials directly. This is dangerous because the website owner could potentially access private information or misuse the account.
+
+OAuth solves this problem by allowing users to authenticate with the service provider directly instead of sharing credentials with third-party applications.
+
+---
+
+## What Is OAuth
+
+OAuth is an authorization framework that allows applications to access resources on behalf of a user without requiring the user's password.
+
+It enables users to grant limited access to their data while keeping their credentials private.
+
+---
+
+## Authentication vs Authorization
+
+### Authentication
+
+Authentication is the process of verifying a user's identity.
+
+In simple terms:
+
+> Who are you?
+
+---
+
+### Authorization
+
+Authorization determines what a user or application is allowed to access.
+
+In simple terms:
+
+> What are you allowed to do?
+
+---
+
+## OAuth Roles
+
+### Resource Owner
+
+The Resource Owner is usually the user who owns the data or resources.
+
+For example, if you own a Google account, you are the Resource Owner.
+
+---
+
+### Client
+
+The Client is the application requesting access to the user's resources.
+
+For example, a website that offers "Login with Google" acts as the Client.
+
+---
+
+### Authorization Server
+
+The Authorization Server authenticates the user and asks for permission (consent).
+
+If the user approves the request, it issues tokens that the Client can use.
+
+---
+
+### Resource Server
+
+The Resource Server stores and serves the actual user data.
+
+Examples include:
+
+* Gmail API
+* Google Drive API
+* Google Profile API
+
+The Resource Server validates tokens before providing access to resources.
+
+---
+
+## OAuth Flow
+
+1. The user clicks "Login with Google".
+2. The application redirects the user to Google's authorization page.
+3. Google displays the requested permissions (scopes).
+4. The user approves the request.
+5. Google authenticates the user if necessary.
+6. Google issues an authorization result and tokens.
+7. The application sends the token when requesting user resources.
+8. Google validates the token and returns the requested information.
+9. The application logs the user in or creates a new account if one does not exist.
+
+---
+
+## Login with Google Example
+
+A user visits a website and clicks "Login with Google".
+
+The user is redirected to Google, where they authenticate and grant permission to share specific information such as their email address and profile.
+
+Google then issues tokens that allow the application to access the approved information without ever knowing the user's Google password.
+
+---
+
+## Scopes
+
+Scopes define what resources an application wants to access.
+
+Examples:
+
+* Email
+* Profile
+* Contacts
+* Calendar
+
+Applications should request only the scopes they actually need.
+
+---
+
+## Permissions
+
+Permissions are the approvals granted by the user.
+
+Before access is granted, the user is shown a consent screen describing the requested permissions.
+
+The user can choose whether to allow or deny the request.
+
+---
+
+## Advantages
+
+* Users do not need to share passwords with third-party applications.
+* Improves security and privacy.
+* Provides a better user experience.
+* Widely supported by major platforms.
+* Allows limited and controlled access to resources.
+
+---
+
+## Disadvantages
+
+* More complex than traditional authentication systems.
+* Depends on external providers.
+* Service outages can affect login functionality.
+* Incorrect implementation can introduce security issues.
