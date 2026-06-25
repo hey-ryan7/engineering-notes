@@ -1,0 +1,73 @@
+# Day 7 — OpenID Connect (OIDC)
+
+## Why OIDC Exists
+
+OIDC was created to eliminate extra requests for getting user information and to make the authentication process faster.
+
+## The Problem with OAuth Alone
+
+When using OAuth alone, the application first requests authorization from the provider. The provider says "okay, this user is authorized, here is an Access Token." Then the application must use that Access Token to make a second request, asking "I have the token, now give me the user's name and email."
+
+This costs time and resources. OIDC solves this by saying: "The user has given permission. Here is your token, and here is the user's name and email, all in one step."
+
+## What Is OIDC
+
+OIDC is an identity layer that sits on top of OAuth 2.0. It adds user identity information to the token that the provider gives to the application.
+
+## OAuth vs OIDC
+
+OAuth is about getting permission to access resources from a provider. OIDC is a layer on top of OAuth that includes identity information about the user inside the token.
+
+## What Is an ID Token
+
+An ID Token is a JWT that contains the user's identity information. It includes things like the user's name, email address, profile picture, and a unique identifier. The Authorization Server (for example, Google) issues the ID Token and the application can read it. It is protected by a Signature, so nobody can tamper with it.
+
+## Access Token vs ID Token
+
+An Access Token is used to access resources. It answers the question: "What are you allowed to do?" The Access Token is sent to the Resource Server. It is usually an opaque string.
+
+An ID Token is used to identify the user. It answers the question: "Who are you?" The ID Token is for the Client application. It is always a JWT, which means the application can decode and read it. It contains claims like name, email, and subject.
+
+## Claims
+
+Claims are the individual pieces of information inside the ID Token payload. Each claim is a statement about the user. Examples include:
+
+- `email`
+- `name`
+- `sub` (subject, the unique user ID)
+- `iss` (issuer, who issued the token)
+- `exp` (expiration time)
+
+## OIDC Flow
+
+1. The user clicks "Login with Google".
+2. The Client redirects the user to the Authorization Server.
+3. The Authorization Server authenticates the user.
+4. The Authorization Server shows a consent screen.
+5. The user approves the request.
+6. The Authorization Server issues an Access Token and an ID Token together.
+7. The Client decodes the ID Token, reads the user's identity, and logs the user in.
+
+## Login with Google Example
+
+A user clicks "Login with Google" on a website.
+
+The user is redirected to Google, where they log in and grant permission. Google then issues an Access Token and an ID Token at the same time.
+
+The application decodes the ID Token and reads the user's name and email directly. The user is logged in without needing a second request to get identity information.
+
+## Advantages
+
+- Faster than OAuth alone because user identity comes in one step instead of two.
+- More secure because the ID Token is a JWT protected by a Signature.
+- Based on an open standard that is widely supported.
+
+## Disadvantages
+
+- More complex to implement than simple email and password login.
+- Depends on external providers like Google.
+- Requires understanding of both OAuth 2.0 and JWT.
+
+> If OAuth is for authorization, how does Google know who the user is during Login with Google?
+
+> Because OIDC introduces an ID Token that contains identity information about the authenticated user. When the application sends `scope=openid`, the Authorization Server knows to issue an ID Token alongside the Access Token. The application decodes the ID Token and gets the user's name, email, and unique identifier directly.
